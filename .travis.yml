@@ -4,4 +4,4 @@ php:
     - 5.5
 
 install: ./composer.phar install
-script: ./vendor/bin/phpunit
+script: make ci

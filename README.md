@@ -35,10 +35,10 @@ $app['salesforce.filter'] = 'WHERE Foo_Coupon_Code__c != null';
 $app['salesforce.upsertfunction'] = $app->protect(function(array $records) use ($app) {
     // UPSERT the salesforce data here, return the number of updated records.
     //
-    // Will be called with an array of stdClass objects, with the fields from
+    // Will be called with an array of hash-maps (arrays), with the fields from
     // your fieldmap, e.g:
     //
-    //   (object)[
+    //   [
     //      'id' => '123232abcs',
     //      'owner' => 'Some One',
     //      'subscriptionStart' => '1979-01-02',
