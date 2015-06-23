@@ -47,7 +47,7 @@ $app['salesforce.upsertfunction'] = $app->protect(function(array $records) use (
     //   ]
     //
     // This function may get called more than once (once per batch).
-    // count($records) will always be more than 0 and less than 501.
+    // count($records) will always be more than 0 and less than 2001.
     //
     // You can do what you want here, noSQL, SQL, whatever.
     return $app['em']->getRepository(Entity\Salesforce::class)->batchUpsert($records);
