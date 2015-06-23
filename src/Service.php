@@ -6,6 +6,7 @@
 namespace EasyBib\Silex\Salesforce;
 
 use SforcePartnerClient;
+use QueryResult;
 use SObject;
 
 class Service
@@ -48,14 +49,36 @@ class Service
         if ($accountId !== null) {
             $query = $this->createSalesforceQuery($this->fieldMap, 'WHERE Id = \'' . $accountId . '\'');
         }
-        $data = $this->query($query);
         $upsert = $this->upsertFunction;
-        return [count($data), $upsert($data)];
+
+        $totalReceived = 0;
+        $totalUpdated = 0;
+        foreach ($this->query($query) as $data) {
+            $totalReceived += count($data);
+            $totalUpdated += $upsert($data);
+        }
+        return [$totalReceived, $totalUpdated];
     }
 
     private function query($query)
     {
         $response = $this->client->query($query);
+        $queryResult = new QueryResult($response);
+        $done = false;
+
+        while (!$done) {
+            yield $this->formatRecords($queryResult->records);
+            if (!$queryResult->done) {
+                $response = $this->client->queryMore($queryResult->queryLocator);
+                $queryResult = new QueryResult($response);
+            } else {
+                $done = true;
+            }
+        }
+    }
+
+    private function formatRecords(array $records)
+    {
         return array_map(
             function ($record) {
                 $sobj = new SObject($record);
@@ -79,7 +102,7 @@ class Service
                 }
                 return $out;
             },
-            $response->records
+            $records
         );
     }
 
