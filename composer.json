@@ -1,0 +1,14 @@
+{
+    "name": "easybib/salesforce-sync",
+    "description": "Wrapper around the Salesforce client.",
+    "require": {
+        "developerforce/force.com-toolkit-for-php": "27.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Richard Wossal",
+            "email": "richard@r-wos.org"
+        }
+    ]
+}
