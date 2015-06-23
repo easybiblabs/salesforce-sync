@@ -1,0 +1,7 @@
+language: php
+php:
+    - nightly
+    - 5.5
+
+install: ./composer.phar install
+script: ./vendor/bin/phpunit

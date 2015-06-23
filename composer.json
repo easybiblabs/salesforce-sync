@@ -4,11 +4,19 @@
     "require": {
         "developerforce/force.com-toolkit-for-php": "27.*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "4.*"
+    },
     "license": "MIT",
     "authors": [
         {
             "name": "Richard Wossal",
             "email": "richard@r-wos.org"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "EasyBib\\Silex\\Salesforce\\": "src/"
+        }
+    }
 }
