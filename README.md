@@ -13,7 +13,8 @@ EasyBib\Silex\Salesforce\SalesforceServiceProvider in a Silex-y kind of app.
 
 ### configure
 
-required:
+####required
+
 ```php
 $app['salesforce.username'] = 'username';
 $app['salesforce.password'] = 'password accesstoken thingy';
@@ -55,7 +56,8 @@ $app['salesforce.upsertfunction'] = $app->protect(function(array $records) use (
 
 ```
 
-optional
+#### optional
+
 ```php
 // You only need to set this if you don't use composer.
 $app['salesforce.wsdlpath'] = 'path/to/salesforce/partner.wsdl.xml';
@@ -84,6 +86,6 @@ $app['salesforce.client'];
 
 ### Possible fields to select
 
-* see https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_objects_account.htm#topic-title)
+* see https://developer.salesforce.com/docs/atlas.en-us.api.meta/api/sforce_api_objects_account.htm#topic-title
 * *plus*, there's a weird JOIN-less JOIN stuff, too: https://developer.salesforce.com/blogs/developer-relations/2013/05/basic-soql-relationship-queries.html
 * *plus*, of course, custom fields (`Field_Name__c`)
