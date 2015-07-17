@@ -3,5 +3,10 @@ php:
     - nightly
     - 5.5
 
+matrix:
+  allow_failures:
+    - php: nightly
+  fast_finish: true
+
 install: ./composer.phar install
 script: make ci
