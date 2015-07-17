@@ -5,7 +5,6 @@
  */
 namespace EasyBib\Silex\Salesforce;
 
-use Silex\Application;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,7 +16,7 @@ class SyncCommand extends BaseCommand
     private $service;
 
     /**
-     * @param Application $app
+     * @param Service $service
      */
     public function __construct(Service $service)
     {
