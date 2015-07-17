@@ -5,7 +5,6 @@
  */
 namespace EasyBib\Silex\Salesforce;
 
-use EasyBib\Scholar\Entity;
 use SforcePartnerClient;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
