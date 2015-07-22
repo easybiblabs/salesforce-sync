@@ -60,6 +60,26 @@ class Service
         return [$totalReceived, $totalUpdated];
     }
 
+    /**
+     * Fetch one account from salesforce.
+     * @param string $accountId
+     * @return mixed[]|null The salesforce record
+     */
+    public function fetch($accountId)
+    {
+        $query = $this->createSalesforceQuery($this->fieldMap, 'WHERE Id = \'' . $accountId . '\'');
+
+        foreach ($this->query($query) as $data) {
+            if (empty($data)) {
+                return null;
+            }
+
+            return $data[0];
+        }
+
+        return null;
+    }
+
     private function query($query)
     {
         $response = $this->client->query($query);
