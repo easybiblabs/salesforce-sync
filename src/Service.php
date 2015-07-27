@@ -5,13 +5,12 @@
  */
 namespace EasyBib\Silex\Salesforce;
 
-use SforcePartnerClient;
 use QueryResult;
 use SObject;
 
 class Service
 {
-    /** @var SforcePartnerClient */
+    /** @var ClientProxy */
     private $client;
     /** @var array */
     private $fieldMap;
@@ -21,7 +20,7 @@ class Service
     private $upsertFunction;
 
     /**
-     * @param \SforcePartnerClient $client - a logged-in salesforce client
+     * @param ClientProxy $client
      * @param array $fieldMap - a map from salesforce field name to your own field name
      * @param string $filterClause - a WHERE/HAVING/LIMIT statement for the salesforce API
      * @param callable $upsertFunction - a function (array $records) => number of updated records
@@ -30,7 +29,7 @@ class Service
      *        This function may get called more than once (once per batch).
      *        count($records) will always be more than 0 and less than 2001.
      */
-    public function __construct(SforcePartnerClient $client, array $fieldMap, $filterClause, callable $upsertFunction)
+    public function __construct(ClientProxy $client, array $fieldMap, $filterClause, callable $upsertFunction)
     {
         $this->client = $client;
         $this->fieldMap = $fieldMap;

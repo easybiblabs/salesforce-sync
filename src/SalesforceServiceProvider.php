@@ -21,16 +21,18 @@ class SalesforceServiceProvider implements ServiceProviderInterface
             $app['salesforce.wsdlpath'] = dirname(dirname(dirname(__DIR__))) . '/developerforce/force.com-toolkit-for-php/soapclient/partner.wsdl.xml';
         }
 
-        $app['salesforce.client'] = $app->share(function () use ($app) {
-            $client = new SforcePartnerClient();
-            $client->createConnection($app['salesforce.wsdlpath']);
-            $client->login($app['salesforce.username'], $app['salesforce.password']);
-            return $client;
+        $app['salesforce.client.proxy'] = $app->share(function () use ($app) {
+            return new ClientProxy(
+                new SforcePartnerClient(),
+                $app['salesforce.wsdlpath'],
+                $app['salesforce.username'],
+                $app['salesforce.password']
+            );
         });
 
         $app['salesforce.service'] = $app->share(function () use ($app) {
             return new Service(
-                $app['salesforce.client'],
+                $app['salesforce.client.proxy'],
                 $app['salesforce.fieldmap'],
                 $app['salesforce.filter'],
                 $app['salesforce.upsertfunction']
