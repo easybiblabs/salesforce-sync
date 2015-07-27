@@ -78,8 +78,8 @@ $app['salesforce.command.sync'];
 // the EasyBib\Silex\Salesforce\Service, same functionality as the command
 $app['salesforce.service'];
 
-// a logged-in \SforcePartnerClient, if you're feeling brave
-$app['salesforce.client'];
+// a proxy to a logged-in \SforcePartnerClient, if you're feeling brave
+$app['salesforce.client.proxy'];
 ```
 
 ## Docs
