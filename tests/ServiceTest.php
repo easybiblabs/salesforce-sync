@@ -5,6 +5,7 @@
  */
 namespace EasyBib\Test\Silex\Salesforce;
 use EasyBib\Silex\Salesforce;
+use EasyBib\Silex\Salesforce\ClientProxy;
 
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -116,7 +117,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $sfclient->expects($this->once())
             ->method('query')
             ->will($this->returnValue($sfresponse));
-        return $sfclient;
+
+        return new ClientProxy($sfclient, '', '', '');
     }
 
     private function mockClientForQueryMore()
@@ -168,6 +170,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $sfclient->expects($this->once())
             ->method('queryMore')
             ->will($this->returnValue($moreSfResponse));
-        return $sfclient;
+
+        return new ClientProxy($sfclient, '', '', '');
     }
 }
