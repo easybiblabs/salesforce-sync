@@ -104,19 +104,29 @@ class Service
                 $data = $sobj->fields;
                 $data->Id = $sobj->Id;
                 $out = [];
-                foreach ($data as $key => $value) {
-                    if (!$value instanceof SObject) {
-                        if (isset($this->fieldMap[$key])) {
-                            $out[$this->fieldMap[$key]] = $value;
-                        }
+
+                foreach($this->fieldMap as $salesForceField => $mapField)     {
+
+                    $fieldParts = explode('.', $salesForceField);
+
+                    // check field exists
+                    if (!$data->{$fieldParts[0]}) {
+                        $out[$mapField] = NULL;
                         continue;
                     }
-                    // joined fields (Owner.Name, Owner.Email)
-                    foreach ($value->fields as $subkey => $subvalue) {
-                        $complexKey = $key . '.' . $subkey;
-                        if (isset($this->fieldMap[$complexKey])) {
-                            $out[$this->fieldMap[$complexKey]] = $subvalue;
+
+
+                    if ($data->{$fieldParts[0]} instanceof SObject) {
+                        // joined fields (Owner.Name, Owner.Email)
+                        $key = $fieldParts[0];
+                        foreach ($data->{$key}->fields as $subkey => $subvalue) {
+                            $complexKey = $key . '.' . $subkey;
+                            if (isset($this->fieldMap[$complexKey])) {
+                                $out[$this->fieldMap[$complexKey]] = $subvalue;
+                            }
                         }
+                    } else {
+                        $out[$mapField] = $data->{$fieldParts[0]};
                     }
                 }
                 return $out;
