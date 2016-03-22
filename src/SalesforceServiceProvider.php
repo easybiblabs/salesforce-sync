@@ -35,7 +35,8 @@ class SalesforceServiceProvider implements ServiceProviderInterface
                 $app['salesforce.client.proxy'],
                 $app['salesforce.fieldmap'],
                 $app['salesforce.filter'],
-                $app['salesforce.upsertfunction']
+                $app['salesforce.upsertfunction'],
+                isset($app['salesforce.cleanupfunction']) ? $app['salesforce.cleanupfunction'] : null
             );
         });
 

@@ -18,23 +18,33 @@ class Service
     private $filterClause;
     /** @var callable */
     private $upsertFunction;
+    /** @var callable */
+    private $cleanupFunction;
 
     /**
      * @param ClientProxy $client
      * @param array $fieldMap - a map from salesforce field name to your own field name
      * @param string $filterClause - a WHERE/HAVING/LIMIT statement for the salesforce API
      * @param callable $upsertFunction - a function (array $records) => number of updated records
-     *        to do the insert/update in you local DB.
+     *        to do the insert/update in your local DB.
      *        Will be called with an array of hash-maps (arrays), with the fields from your fieldmap.
      *        This function may get called more than once (once per batch).
      *        count($records) will always be more than 0 and less than 2001.
+     * @param callable $cleanupFunction (optional) - a function (array $ids) => number of updated records
+     *        that recieves all ids of the records we got from salesforce.
      */
-    public function __construct(ClientProxy $client, array $fieldMap, $filterClause, callable $upsertFunction)
+    public function __construct(
+        ClientProxy $client,
+        array $fieldMap,
+        $filterClause,
+        callable $upsertFunction,
+        callable $cleanupFunction = null)
     {
         $this->client = $client;
         $this->fieldMap = $fieldMap;
         $this->filterClause = $filterClause;
         $this->upsertFunction = $upsertFunction;
+        $this->cleanupFunction = $cleanupFunction;
     }
 
     /**
@@ -52,9 +62,17 @@ class Service
 
         $totalReceived = 0;
         $totalUpdated = 0;
+        $ids = [];
         foreach ($this->query($query) as $data) {
+            if ($this->cleanupFunction) {
+                $ids = array_merge($ids, array_map(function($r) { return $r['id'];}, $data));
+            }
             $totalReceived += count($data);
             $totalUpdated += $upsert($data);
+        }
+        if ($this->cleanupFunction && $accountId === null && count($ids) > 1) {
+            $cleanup = $this->cleanupFunction;
+            $cleanup($ids);
         }
         return [$totalReceived, $totalUpdated];
     }
