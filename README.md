@@ -63,6 +63,13 @@ $app['salesforce.upsertfunction'] = $app->protect(function(array $records) use (
 $app['salesforce.wsdlpath'] = 'path/to/salesforce/partner.wsdl.xml';
 ```
 
+```php
+$app['salesforce.cleanupfunction'] = $app->protect(function(array $ids) use ($app) {
+    // You may use this to a delete "where id not in ($ids) or something like that.
+    // Gets called at the end of a sync(), with all ids of the records we got from salesforce.
+});
+```
+
 Once you have all that, register a `new EasyBib\Silex\Salesforce\SalesforceServiceProvider`.
 
 ### call
