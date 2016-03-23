@@ -21,7 +21,7 @@ $app['salesforce.password'] = 'password accesstoken thingy';
 
 $app['salesforce.fieldmap'] = [
     // the salesforce fields you need => your own local field name
-    // see links do salesforce docs at the end of the README
+    // see links to salesforce docs at the end of the README
     'Id' => 'id',
     'Owner.Name' => 'owner',
     'Foo_Subscription_Start_Date__c' => 'subscriptionStart',
@@ -65,7 +65,7 @@ $app['salesforce.wsdlpath'] = 'path/to/salesforce/partner.wsdl.xml';
 
 ```php
 $app['salesforce.cleanupfunction'] = $app->protect(function(array $ids) use ($app) {
-    // You may use this to a delete "where id not in ($ids) or something like that.
+    // You may use this to do a "delete where id not in ($ids)" or something like that.
     // Gets called at the end of a sync(), with all ids of the records we got from salesforce.
 });
 ```
