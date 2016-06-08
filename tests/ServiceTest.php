@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright (c) 2015 Imagine Easy Solutions LLC
- * MIT licensed, see LICENSE file for details.
+ * Copyright (c) 2016 Chegg Inc.
+ * Apache-2.0 licensed, see LICENSE.txt file for details.
  */
 namespace EasyBib\Test\Silex\Salesforce;
 use EasyBib\Silex\Salesforce;

@@ -1,18 +1,10 @@
 <?php
 /**
- * Imagine Easy Solutions LLC, Copyright 2015
- * Modifying, copying, of code contained herein that is not specifically authorized
- * by Imagine Easy Solutions LLC ("Company") is strictly prohibited. Violators will
- * be prosecuted.
+ * Copyright (c) 2016 Chegg Inc.
+ * Apache-2.0 licensed, see LICENSE.txt file for details.
  *
- * This restriction applies to proprietary code developed by EasyBib. Code from
- * third-parties or open source projects may be subject to other licensing
- * restrictions by their respective owners.
- *
- * Additional terms can be found at http://www.easybib.com/company/terms
- *
- * @license  http://www.easybib.com/company/terms Terms of Service
- * @link     http://www.imagineeasy.com/
+ * @license  Apache-2.0
+ * @link     http://www.apache.org/licenses/LICENSE-2.0
  */
 namespace EasyBib\Silex\Salesforce;
 
